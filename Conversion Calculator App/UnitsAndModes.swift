@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 enum CalculatorMode : String {
     case Length
     case Volume

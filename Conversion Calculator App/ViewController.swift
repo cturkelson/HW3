@@ -22,7 +22,6 @@ class ViewController: UIViewController, UnitsSelectionViewControllerDelegate {
     @IBOutlet weak var toTextField: UITextField!
     @IBOutlet weak var fromTextField: UITextField!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
      
