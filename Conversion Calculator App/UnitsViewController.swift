@@ -11,7 +11,7 @@ protocol UnitsSelectionViewControllerDelegate {
     func indicateSelection(fromUnits: String, toUnits: String)
 }
 
-class UnitsViewController: UIViewController, modeDelegate {
+class UnitsViewController: UIViewController {
 
     //From Label that will change from the picker
     @IBOutlet weak var fromUnits: UILabel!
@@ -31,10 +31,10 @@ class UnitsViewController: UIViewController, modeDelegate {
     var volumeData: [String] = [String]()
     
     //fromSelection that will send data to main viewcontroller
-    var fromSelection: String = "Yards"
+    var fromSelection: String = ""
     
     //toSelection that will send data to main viewcontroller
-    var toSelection: String = "Meters"
+    var toSelection: String = ""
     
     //delegate that helps transfer information
     var delegate: UnitsSelectionViewControllerDelegate?
@@ -45,10 +45,22 @@ class UnitsViewController: UIViewController, modeDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
+        if(currMode == "Volume") {
+            fromSelection = "Liters"
+            toSelection = "Quarts"
+        }
+        else {
+            fromSelection = "Yards"
+            toSelection = "Meters"
+        }
+        fromUnits.text = fromSelection
+        toUnits.text = toSelection
         
         //sets up the array for the UIPicker
         self.lengthData = ["Yards", "Meters", "Miles"]
+        
+        self.volumeData = ["Liters", "Quarts", "Gallons"]
+        
         
         //initializing delegate
         self.picker.delegate = self
@@ -68,10 +80,7 @@ class UnitsViewController: UIViewController, modeDelegate {
         //assigns tap gesture to dismiss uiPicker
         self.view.addGestureRecognizer(touch)
     }
-    
-    func curMode(mode: String) {
-        currMode = mode
-    }
+ 
         
     //function to dismiss uiPicker
     @objc func dismissKeyboard() {
@@ -109,15 +118,6 @@ class UnitsViewController: UIViewController, modeDelegate {
         picker.isHidden = false
         labelChoose = "From"
     }
-   
-    //Prepares the segue to accept unit change
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "chooseUnits" {
-            if let dest = segue.destination as? ViewController {
-                dest.delegate = self
-             }
-         }
-     }
 
     //setting up UITapGesture for from label
     func setFromLabelTap(){
@@ -154,27 +154,47 @@ extension UnitsViewController : UIPickerViewDataSource, UIPickerViewDelegate {
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
     {
-        return lengthData.count
+        if(currMode == "Length") {
+            return lengthData.count
+        }
+        else {
+            return volumeData.count
+        }
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
     {
-        return self.lengthData[row]
+        if(currMode == "Length") {
+              return self.lengthData[row]
+        }
+        else {
+              return self.volumeData[row]
+        }
+      
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
-        print(currMode)
-        if(labelChoose == "From") {
-            self.fromSelection = self.lengthData[row]
-            fromUnits.text = self.fromSelection
+        if(currMode == "Length") {
+            if(labelChoose == "From") {
+                self.fromSelection = self.lengthData[row]
+                fromUnits.text = self.fromSelection
+        }
+            else {
+                self.toSelection = self.lengthData[row]
+                toUnits.text = self.toSelection
+        }
         }
         else {
-            self.toSelection = self.lengthData[row]
-            toUnits.text = self.toSelection
+            if(labelChoose == "From") {
+                           self.fromSelection = self.volumeData[row]
+                           fromUnits.text = self.fromSelection
+                   }
+                       else {
+                           self.toSelection = self.volumeData[row]
+                           toUnits.text = self.toSelection
         }
-       
     }
 }
 
-
+}

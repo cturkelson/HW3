@@ -7,14 +7,12 @@
 //
 
 import UIKit
-protocol modeDelegate {
-    func curMode(mode: String)
-}
+
 class ViewController: UIViewController, UnitsSelectionViewControllerDelegate {
     //Decides whether we are dealing with length or volume
     let modes: [String] = ["Length","Volume"]
     
-     var delegate: modeDelegate?
+
     
     //Increments the index, and takes the modularity
     var currentModeIndex: Int = 0
@@ -23,6 +21,8 @@ class ViewController: UIViewController, UnitsSelectionViewControllerDelegate {
     @IBOutlet weak var toLabel: UILabel!
     @IBOutlet weak var toTextField: UITextField!
     @IBOutlet weak var fromTextField: UITextField!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
      
@@ -45,6 +45,7 @@ class ViewController: UIViewController, UnitsSelectionViewControllerDelegate {
         if segue.identifier == "chooseUnits" {
             if let dest = segue.destination as? UnitsViewController {
                 dest.delegate = self
+                dest.currMode = modes[currentModeIndex%2]
             }
         }
     }
@@ -82,23 +83,14 @@ class ViewController: UIViewController, UnitsSelectionViewControllerDelegate {
         toTextField.placeholder = "Enter \(modes[currentModeIndex%2]) in \(toLabel.text!)"
     }
     
-    @IBAction func Settings(_ sender: UIButton) {
-        if let d = self.delegate {
-            d.curMode(mode: modes[currentModeIndex%2])
-        }
-    }
     //calculates the opposing field when calculate is tapped
     @IBAction func calculateTapped(_ sender: UIButton) {
         self.view.endEditing(true)
         if(toTextField.text! == "" && fromTextField.text! != ""){
-            let yard = Double(fromTextField.text!)
-            let newNum = Double(yard! * 0.9144)
-            toTextField.text = String(newNum)
+       
         }
         else if(fromTextField.text! == "" && toTextField.text! != ""){
-            let meter = Double(toTextField.text!)
-            let newNum = Double(meter! / 0.9144)
-            fromTextField.text = String(newNum)
+            
         }
         else{
             print("go away")

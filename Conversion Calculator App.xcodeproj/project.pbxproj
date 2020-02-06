@@ -107,9 +107,9 @@
 				F04FAA9A23E94007006DABE9 /* SceneDelegate.swift */,
 				F04FAA9C23E94007006DABE9 /* ViewController.swift */,
 				F04FAA9E23E94007006DABE9 /* Main.storyboard */,
+				F04FAAC823EA4B9B006DABE9 /* UnitsAndModes.swift */,
 				F04FAAA123E9400C006DABE9 /* Assets.xcassets */,
 				F04FAAA323E9400C006DABE9 /* LaunchScreen.storyboard */,
-				F04FAAC823EA4B9B006DABE9 /* UnitsAndModes.swift */,
 				F04FAACA23EA4BFE006DABE9 /* UnitsViewController.swift */,
 				F04FAAA623E9400C006DABE9 /* Info.plist */,
 			);
