@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  Conversion Calculator App
 //
-//  Created by Collin Turkelson on 2/4/20.
+//  Created by Collin Turkelson & Ben Townsend on 2/4/20.
 //  Copyright © 2020 Collin Turkelson. All rights reserved.
 //
 

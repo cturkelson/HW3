@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  Conversion Calculator App
 //
-//  Created by Collin Turkelson on 2/4/20.
+//  Created by Collin Turkelson & Ben Townsend on 2/4/20.
 //  Copyright © 2020 Collin Turkelson. All rights reserved.
 //
 
@@ -104,12 +104,12 @@ class ViewController: UIViewController, UnitsSelectionViewControllerDelegate {
       }
       
       func calculate(from: String, to: String, value: Double) -> Double{
-          if currentModeIndex == 0{
+          if currentModeIndex%2 == 0{
               let toUnit = LengthUnit(rawValue: to)
               let fromUnit = LengthUnit(rawValue: from)
               let lengthKey = LengthConversionKey(toUnits: toUnit!, fromUnits: fromUnit!)
               return value * lengthConversionTable[lengthKey]!
-          }else{
+          } else {
               let toUnit = VolumeUnit(rawValue: to)
               let fromUnit = VolumeUnit(rawValue: from)
               let volumeKey = VolumeConversionKey(toUnits: toUnit!, fromUnits: fromUnit!)
