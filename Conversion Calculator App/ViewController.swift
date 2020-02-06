@@ -85,17 +85,36 @@ class ViewController: UIViewController, UnitsSelectionViewControllerDelegate {
     //calculates the opposing field when calculate is tapped
     @IBAction func calculateTapped(_ sender: UIButton) {
         self.view.endEditing(true)
+        var result: Double = 0
         if(toTextField.text! == "" && fromTextField.text! != ""){
-       
+            result = calculate(from: fromLabel.text!, to: toLabel.text!, value: Double(fromTextField.text!)!)
+            toTextField.text = String(result)
         }
         else if(fromTextField.text! == "" && toTextField.text! != ""){
-            
+            result = calculate(from: toLabel.text!, to: fromLabel.text!, value: Double(toTextField.text!)!)
+            fromTextField.text = String(result)
         }
         else{
             print("go away")
         }
         
         
+    }
+    
+    func calculate(from: String, to: String, value: Double) -> Double{
+        if currentModeIndex == 0{
+            let toUnit = LengthUnit(rawValue: to)
+            let fromUnit = LengthUnit(rawValue: from)
+            let lengthKey = LengthConversionKey(toUnits: toUnit!, fromUnits: fromUnit!)
+            return value * lengthConversionTable[lengthKey]!
+        }else{
+            let toUnit = VolumeUnit(rawValue: to)
+            let fromUnit = VolumeUnit(rawValue: from)
+            let volumeKey = VolumeConversionKey(toUnits: toUnit!, fromUnits: fromUnit!)
+            return value * volumeConversionTable[volumeKey]!
+        }
+        
+        return -1
     }
     
     
